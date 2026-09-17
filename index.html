@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>СИСТЕМА КМ · Двустенная труба: коммерческая презентация</title>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    margin: 0; padding: 0;
+    background: #f4f5f7;
+    color: #2b2b2b;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============ ШАПКА ============ */
+  .header {
+    background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+    color: #fff;
+    padding: 36px 40px 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-inner {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 30px;
+    align-items: center;
+    max-width: 1500px;
+    margin: 0 auto;
+  }
+  .header h1 {
+    margin: 0; font-size: 28px; font-weight: 800;
+    letter-spacing: 0.3px; line-height: 1.2;
+  }
+  .header h1 .brand { color: #fff; font-weight: 900; }
+  .header .sub {
+    margin-top: 10px; font-size: 14px; color: #ffcdd2;
+    max-width: 700px; line-height: 1.55;
+  }
+  .header-illustration svg { display: block; width: 100%; height: auto; }
+
+  /* ============ ВОРОНКА ============ */
+  .funnel-wrap {
+    max-width: 1500px; margin: 28px auto 10px; padding: 0 40px;
+  }
+  .funnel {
+    background: #fff; border-radius: 12px; padding: 28px 32px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+    border-top: 5px solid #d32f2f;
+  }
+  .funnel h3 {
+    margin: 0 0 6px; font-size: 17px; color: #b71c1c;
+  }
+  .funnel .funnel-sub {
+    font-size: 13px; color: #757575; margin-bottom: 24px;
+  }
+  .funnel-row {
+    display: grid; grid-template-columns: 240px 1fr 130px 130px;
+    align-items: center; gap: 18px; margin-bottom: 14px;
+  }
+  .funnel-row:last-child { margin-bottom: 0; }
+  .funnel-label {
+    font-size: 13.5px; font-weight: 600; color: #2b2b2b;
+    line-height: 1.3;
+  }
+  .funnel-label .small {
+    display: block; font-size: 11.5px; color: #9e9e9e;
+    font-weight: 400; margin-top: 2px;
+  }
+  .funnel-bar-track {
+    height: 34px; background: #f4f5f7; border-radius: 6px;
+    overflow: hidden; position: relative;
+  }
+  .funnel-bar {
+    height: 100%; border-radius: 6px;
+    display: flex; align-items: center; padding-left: 12px;
+    color: #fff; font-size: 12px; font-weight: 700;
+  }
+  .funnel-bar.b1 { background: #b71c1c; }
+  .funnel-bar.b2 { background: #d32f2f; }
+  .funnel-bar.b3 { background: #e57373; }
+  .funnel-bar.b4 { background: #ef5350; }
+  .funnel-bar.b5 { background: #ffcdd2; color: #b71c1c; }
+  .funnel-value {
+    font-size: 14px; font-weight: 800; color: #2b2b2b;
+    text-align: right;
+  }
+  .funnel-share {
+    font-size: 12.5px; color: #757575; text-align: right;
+    font-weight: 600;
+  }
+
+  /* ============ ФАКТОРЫ ============ */
+  .grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px; max-width: 1500px;
+    margin: 0 auto 30px; padding: 0 40px;
+  }
+  .factor {
+    background: #fff; border-radius: 12px; padding: 22px 24px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+    border-left: 5px solid #d32f2f;
+  }
+  .factor.green { border-left-color: #2e9e5b; }
+  .factor h3 {
+    margin: 0 0 12px; font-size: 16px; color: #2b2b2b;
+  }
+  .factor h3 .num {
+    display: inline-block; background: #d32f2f; color: #fff;
+    width: 26px; height: 26px; line-height: 26px; text-align: center;
+    border-radius: 50%; font-size: 13px; margin-right: 10px;
+  }
+  .factor.green h3 .num { background: #2e9e5b; }
+  .factor ul { margin: 8px 0 0; padding-left: 20px; }
+  .factor li {
+    margin-bottom: 8px; font-size: 13.5px; line-height: 1.5;
+    color: #424242;
+  }
+  .factor .limit {
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px dashed #e0e0e0;
+    font-size: 13px; color: #757575;
+  }
+  .factor .limit strong { color: #d32f2f; }
+
+  /* ============ ДЕНЕЖНЫЙ БЛОК ============ */
+  .money-wrap {
+    max-width: 1500px; margin: 20px auto 10px; padding: 0 40px;
+  }
+  .money-box {
+    background: #fff; border-radius: 14px;
+    padding: 30px 34px;
+    box-shadow: 0 6px 24px rgba(211,47,47,0.12);
+    border-top: 5px solid #d32f2f;
+  }
+  .money-box h2 {
+    margin: 0 0 6px; font-size: 22px; font-weight: 800;
+    color: #b71c1c;
+  }
+  .money-box .money-sub {
+    font-size: 13.5px; color: #757575; margin-bottom: 24px;
+  }
+  .money-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+  }
+  .money-card {
+    background: #fff5f5; border-radius: 10px;
+    padding: 20px; border-left: 4px solid #d32f2f;
+  }
+  .money-card.green { border-left-color: #2e9e5b; background: #f1f8f3; }
+  .money-card.blue  { border-left-color: #1e88e5; background: #f0f7fd; }
+  .money-card.gray  { border-left-color: #757575; background: #fafafa; }
+  .money-card .m-label {
+    font-size: 11.5px; color: #757575;
+    text-transform: uppercase; letter-spacing: 0.6px;
+    margin-bottom: 8px;
+  }
+  .money-card .m-value {
+    font-size: 26px; font-weight: 900; color: #2b2b2b;
+    line-height: 1.1;
+  }
+  .money-card .m-sub {
+    font-size: 12px; color: #9e9e9e; margin-top: 6px;
+  }
+
+  .section-title {
+    max-width: 1500px; margin: 40px auto 16px;
+    padding: 0 40px;
+    font-size: 18px; font-weight: 700; color: #b71c1c;
+    border-left: 4px solid #d32f2f; padding-left: 14px;
+  }
+  .card {
+    background: #fff; border-radius: 12px; padding: 18px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+  }
+
+  /* ============ ПРОГНОЗ APPLE ============ */
+  .forecast-apple {
+    max-width: 1500px; margin: 0 auto 30px; padding: 0 40px;
+  }
+  .forecast-panel {
+    background: #fff; border-radius: 20px;
+    padding: 32px 40px 28px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+  .forecast-panel .fp-title {
+    font-size: 12px; font-weight: 600; color: #9e9e9e;
+    text-transform: uppercase; letter-spacing: 1.2px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .forecast-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+  .forecast-item { text-align: center; }
+  .forecast-item .year {
+    font-size: 12px; font-weight: 600; color: #9e9e9e;
+    letter-spacing: 0.5px; margin-bottom: 6px;
+  }
+  .forecast-item .value {
+    font-size: 42px; font-weight: 700; color: #2b2b2b;
+    line-height: 1; letter-spacing: -1.2px;
+  }
+  .forecast-item .unit {
+    font-size: 13px; font-weight: 500; color: #9e9e9e;
+    margin-top: 4px;
+  }
+  .forecast-item.start .value { color: #9e9e9e; }
+  .forecast-item.growth .value { color: #d32f2f; }
+  .forecast-arrow {
+    font-size: 20px; color: #e0e0e0; font-weight: 300;
+  }
+  .forecast-growth-row {
+    display: flex; justify-content: center; gap: 40px;
+    margin-top: 16px;
+  }
+  .growth-chip {
+    font-size: 12px; color: #2e9e5b; font-weight: 700;
+    background: #f1f8f3; padding: 4px 14px; border-radius: 20px;
+  }
+  .forecast-note {
+    text-align: center; margin-top: 22px;
+    font-size: 12.5px; color: #9e9e9e;
+    padding-top: 18px; border-top: 1px solid #f4f5f7;
+  }
+  .forecast-note strong { color: #d32f2f; font-weight: 600; }
+
+  /* ============ СРАВНЕНИЕ ЦЕН ============ */
+  .compare-wrap {
+    max-width: 1500px; margin: 0 auto 30px; padding: 0 40px;
+  }
+  .compare {
+    background: #fff; border-radius: 12px; padding: 28px 32px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+  }
+  .compare h3 {
+    margin: 0 0 6px; font-size: 17px; color: #b71c1c;
+  }
+  .compare .compare-sub {
+    font-size: 13px; color: #757575; margin-bottom: 26px;
+  }
+  .price-block {
+    display: grid; grid-template-columns: 140px 1fr;
+    gap: 24px; margin-bottom: 30px; align-items: center;
+  }
+  .price-block:last-child { margin-bottom: 0; }
+  .price-label { text-align: right; }
+  .price-label .diam {
+    font-size: 22px; font-weight: 900; color: #2b2b2b;
+  }
+  .price-label .sn-tag {
+    display: inline-block; margin-top: 4px;
+    background: #d32f2f; color: #fff;
+    font-size: 11px; font-weight: 800;
+    padding: 2px 10px; border-radius: 10px;
+  }
+  .price-bars { display: flex; flex-direction: column; gap: 8px; }
+  .price-bar-row {
+    display: grid; grid-template-columns: 110px 1fr 80px;
+    gap: 12px; align-items: center;
+  }
+  .price-bar-name {
+    font-size: 12.5px; font-weight: 700; color: #424242;
+    text-align: right;
+  }
+  .price-bar-name.our { color: #d32f2f; }
+  .price-bar-track {
+    height: 30px; background: #f4f5f7; border-radius: 6px;
+    overflow: hidden; position: relative;
+  }
+  .price-bar-fill {
+    height: 100%; border-radius: 6px;
+    display: flex; align-items: center; padding-left: 12px;
+    color: #fff; font-size: 12px; font-weight: 800;
+  }
+  .price-bar-fill.our  { background: linear-gradient(90deg, #d32f2f, #b71c1c); }
+  .price-bar-fill.dkc  { background: linear-gradient(90deg, #757575, #424242); }
+  .price-bar-fill.prom { background: linear-gradient(90deg, #2e9e5b, #1b5e20); }
+  .price-bar-val {
+    font-size: 13.5px; font-weight: 800; color: #2b2b2b;
+  }
+  .price-bar-val.our { color: #d32f2f; }
+  .price-legend {
+    display: flex; gap: 24px; margin-top: 26px;
+    padding-top: 16px; border-top: 1px solid #eceff1;
+    font-size: 12.5px; color: #424242;
+  }
+  .price-legend span { display: flex; align-items: center; gap: 8px; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 3px; }
+  .legend-dot.our  { background: #d32f2f; }
+  .legend-dot.dkc  { background: #424242; }
+  .legend-dot.prom { background: #2e9e5b; }
+
+  /* ============ SN + ПРИМЕНЕНИЕ ============ */
+  .sn-wrap {
+    max-width: 1500px; margin: 0 auto 30px; padding: 0 40px;
+  }
+  .sn-box {
+    background: #fff; border-radius: 12px; padding: 28px 32px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+    border-top: 5px solid #d32f2f;
+  }
+  .sn-box h3 {
+    margin: 0 0 6px; font-size: 17px; color: #b71c1c;
+  }
+  .sn-box .sn-sub {
+    font-size: 13px; color: #757575; margin-bottom: 22px;
+  }
+  .diam-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 18px; margin-bottom: 24px;
+  }
+  .diam-card {
+    border-radius: 12px; padding: 22px 22px 20px;
+    border: 2px solid #eceff1; background: #fafafa;
+    position: relative;
+  }
+  .diam-card.leader {
+    border-color: #d32f2f; background: #fff5f5;
+    box-shadow: 0 4px 16px rgba(211,47,47,0.15);
+  }
+  .diam-card .dc-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .diam-card .dc-name {
+    font-size: 26px; font-weight: 900; color: #2b2b2b;
+    line-height: 1;
+  }
+  .diam-card.leader .dc-name { color: #d32f2f; }
+  .diam-card .dc-sn {
+    font-size: 11px; font-weight: 800; color: #fff;
+    background: #d32f2f; padding: 3px 10px; border-radius: 10px;
+  }
+  .diam-card .dc-pop {
+    font-size: 11.5px; color: #757575; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.4px;
+    margin-bottom: 14px;
+  }
+  .diam-card.leader .dc-pop { color: #d32f2f; }
+  .diam-card .dc-bar {
+    height: 8px; background: #eceff1; border-radius: 4px;
+    overflow: hidden; margin-bottom: 16px;
+  }
+  .diam-card.leader .dc-bar { background: #ffcdd2; }
+  .diam-card .dc-bar-fill {
+    height: 100%; border-radius: 4px;
+  }
+  .diam-card.leader .dc-bar-fill { background: #d32f2f; }
+  .diam-card .dc-bar-fill.g2 { background: #757575; }
+  .diam-card .dc-bar-fill.g3 { background: #9e9e9e; }
+  .diam-card .dc-apps {
+    list-style: none; margin: 0; padding: 0;
+  }
+  .diam-card .dc-apps li {
+    font-size: 12.5px; color: #424242; line-height: 1.5;
+    padding-left: 16px; position: relative; margin-bottom: 6px;
+  }
+  .diam-card .dc-apps li::before {
+    content: "—"; position: absolute; left: 0;
+    color: #bdbdbd;
+  }
+  .diam-card.leader .dc-apps li::before { color: #d32f2f; }
+
+  .sn-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px; margin-bottom: 20px;
+  }
+  .sn-table th {
+    background: #f4f5f7; color: #424242;
+    padding: 10px 12px; text-align: left;
+    font-weight: 700; font-size: 11.5px;
+    text-transform: uppercase; letter-spacing: 0.4px;
+    border-bottom: 2px solid #eceff1;
+  }
+  .sn-table td {
+    padding: 10px 12px; border-bottom: 1px solid #f4f5f7;
+    color: #424242;
+  }
+  .sn-table tr.active td {
+    background: #fff5f5; color: #2b2b2b; font-weight: 600;
+  }
+  .sn-table td.sn-name {
+    font-weight: 800; color: #2b2b2b;
+  }
+  .sn-table tr.active td.sn-name { color: #d32f2f; }
+
+  .sn-justify {
+    background: #fff5f5; border-left: 4px solid #d32f2f;
+    border-radius: 8px; padding: 18px 22px;
+    font-size: 13.5px; color: #424242; line-height: 1.6;
+  }
+  .sn-justify strong { color: #b71c1c; }
+  .sn-justify .green { color: #2e9e5b; font-weight: 700; }
+
+  /* ============ КОММЕРЧЕСКИЙ ПОТЕНЦИАЛ ============ */
+  .insight {
+    max-width: 1500px; margin: 0 auto 30px; padding: 0 40px;
+  }
+  .insight-box {
+    background: #fff; color: #2b2b2b; border-radius: 12px;
+    padding: 26px 32px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+    border-top: 5px solid #d32f2f;
+    font-size: 13.5px; line-height: 1.6;
+  }
+  .insight-box h3 {
+    margin: 0 0 14px; font-size: 16px; color: #b71c1c;
+    text-transform: uppercase; letter-spacing: 0.4px;
+  }
+  .insight-box ul { margin: 0; padding-left: 20px; }
+  .insight-box li { margin-bottom: 10px; }
+  .insight-box strong { color: #b71c1c; }
+  .insight-box .green { color: #2e9e5b; font-weight: 700; }
+
+  /* ============ ПРЕИМУЩЕСТВА ДЛЯ ЗАВОДА ============ */
+  .hero {
+    max-width: 1500px; margin: 28px auto 10px; padding: 0 40px;
+  }
+  .hero-box {
+    background: #fff; border-radius: 14px;
+    padding: 32px 36px;
+    box-shadow: 0 6px 24px rgba(211,47,47,0.10);
+    border-top: 5px solid #d32f2f;
+  }
+  .hero-box h2 {
+    margin: 0 0 8px; font-size: 22px; font-weight: 800;
+    color: #b71c1c;
+  }
+  .hero-box .hero-sub {
+    font-size: 14px; color: #757575; margin-bottom: 24px;
+    max-width: 1000px; line-height: 1.5;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  }
+  .hero-item {
+    background: #fff5f5; border-radius: 10px;
+    padding: 18px 20px; border-left: 4px solid #d32f2f;
+  }
+  .hero-item .hero-num {
+    font-size: 24px; font-weight: 900; color: #d32f2f;
+    line-height: 1; margin-bottom: 8px;
+  }
+  .hero-item .hero-label {
+    font-size: 13px; font-weight: 800; color: #2b2b2b;
+    margin-bottom: 6px;
+    text-transform: uppercase; letter-spacing: 0.4px;
+  }
+  .hero-item .hero-text {
+    font-size: 12.5px; color: #616161; line-height: 1.45;
+  }
+
+  .footer {
+    text-align: center; color: #9e9e9e;
+    font-size: 12px; padding: 24px;
+  }
+  @media (max-width: 1000px) {
+    .grid, .hero-grid, .diam-grid, .money-grid { grid-template-columns: 1fr; padding: 0 20px; }
+    .section-title, .funnel-wrap, .sn-wrap, .compare-wrap, .insight, .money-wrap, .forecast-apple { padding: 0 20px; }
+    .hero { padding: 0 20px; }
+    .header-inner { grid-template-columns: 1fr; }
+    .header-illustration { display: none; }
+    .funnel-row { grid-template-columns: 1fr; gap: 6px; }
+    .funnel-value, .funnel-share { text-align: left; }
+    .price-block { grid-template-columns: 1fr; gap: 10px; }
+    .price-label { text-align: left; }
+    .price-bar-row { grid-template-columns: 90px 1fr 70px; }
+    .price-legend { flex-direction: column; gap: 10px; }
+    .forecast-row { grid-template-columns: 1fr; gap: 8px; }
+    .forecast-arrow { transform: rotate(90deg); }
+    .forecast-panel { padding: 24px 20px; }
+    .forecast-item .value { font-size: 36px; }
+    .forecast-growth-row { flex-direction: column; gap: 10px; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ ШАПКА ============ -->
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <h1><span class="brand">СИСТЕМА КМ</span> · Двустенная труба для кабельной канализации</h1>
+      <div class="sub">
+        Коммерческая презентация нового продукта: труба двустенная гофрированная
+        SN10/SN12 с протяжкой. Рынок, драйверы, деньги, прогноз, цены.
+      </div>
+    </div>
+    <div class="header-illustration">
+      <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="340" height="180" rx="12" fill="rgba(255,255,255,0.08)"/>
+        <rect x="40" y="60" width="260" height="60" rx="30"
+              fill="none" stroke="#fff" stroke-width="3"/>
+        <path d="M 60 75 Q 70 65, 80 75 T 100 75 T 120 75 T 140 75 T 160 75
+                 T 180 75 T 200 75 T 220 75 T 240 75 T 260 75 T 280 75"
+              fill="none" stroke="#ffcdd2" stroke-width="2.5"/>
+        <path d="M 60 105 Q 70 115, 80 105 T 100 105 T 120 105 T 140 105
+                 T 160 105 T 180 105 T 200 105 T 220 105 T 240 105 T 260 105 T 280 105"
+              fill="none" stroke="#ffcdd2" stroke-width="2.5"/>
+        <circle cx="85" cy="90" r="5" fill="#2e9e5b"/>
+        <circle cx="105" cy="90" r="5" fill="#1e88e5"/>
+        <circle cx="125" cy="90" r="5" fill="#ffb74d"/>
+        <circle cx="145" cy="90" r="5" fill="#2e9e5b"/>
+        <circle cx="165" cy="90" r="5" fill="#1e88e5"/>
+        <circle cx="185" cy="90" r="5" fill="#ffb74d"/>
+        <circle cx="205" cy="90" r="5" fill="#2e9e5b"/>
+        <circle cx="225" cy="90" r="5" fill="#1e88e5"/>
+        <circle cx="245" cy="90" r="5" fill="#ffb74d"/>
+        <circle cx="265" cy="90" r="5" fill="#2e9e5b"/>
+        <line x1="40" y1="90" x2="300" y2="90" stroke="#fff" stroke-width="1" stroke-dasharray="4,4" opacity="0.7"/>
+        <text x="40" y="45" fill="#fff" font-size="11" font-weight="700">Двустенная гофра</text>
+        <text x="40" y="150" fill="#ffcdd2" font-size="11">SN10 / SN12 · с протяжкой</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ВОРОНКА ============ -->
+<div class="section-title">Воронка рынка: от электротехники до нашего продукта</div>
+
+<div class="funnel-wrap">
+  <div class="funnel">
+    <h3>Где живёт наш продукт</h3>
+    <div class="funnel-sub">
+      От общего рынка электротехники — до конкретного канала, в котором мы работаем.
+    </div>
+    <div class="funnel-row">
+      <div class="funnel-label">Рынок электротехники и светотехники РФ<span class="small">Общая база</span></div>
+      <div class="funnel-bar-track"><div class="funnel-bar b1" style="width:100%;">0,80 трлн</div></div>
+      <div class="funnel-value">0,80 трлн ₽</div>
+      <div class="funnel-share">100%</div>
+    </div>
+    <div class="funnel-row">
+      <div class="funnel-label">Сегмент КНС (кабельная канализация)<span class="small">Реалистичная оценка</span></div>
+      <div class="funnel-bar-track"><div class="funnel-bar b2" style="width:3%;min-width:70px;">24</div></div>
+      <div class="funnel-value">24 млрд ₽</div>
+      <div class="funnel-share">3%</div>
+    </div>
+    <div class="funnel-row">
+      <div class="funnel-label">Трубная продукция для кабеля<span class="small">Гофра + двустенная + жёсткая</span></div>
+      <div class="funnel-bar-track"><div class="funnel-bar b3" style="width:1%;min-width:70px;">8</div></div>
+      <div class="funnel-value">8 млрд ₽</div>
+      <div class="funnel-share">1% от 800</div>
+    </div>
+    <div class="funnel-row">
+      <div class="funnel-label">Двустенная труба (наш продукт)<span class="small">Подсегмент внутри труб</span></div>
+      <div class="funnel-bar-track"><div class="funnel-bar b4" style="width:0.3%;min-width:70px;">2,4</div></div>
+      <div class="funnel-value">2,4 млрд ₽</div>
+      <div class="funnel-share">0,3% от 800</div>
+    </div>
+    <div class="funnel-row">
+      <div class="funnel-label">Канал РС + ЭТМ<span class="small">Наш основной канал</span></div>
+      <div class="funnel-bar-track"><div class="funnel-bar b5" style="width:0.21%;min-width:70px;">1,68</div></div>
+      <div class="funnel-value">1,68 млрд ₽</div>
+      <div class="funnel-share">70% от двустенной</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ФАКТОРЫ ============ -->
+<div class="section-title">Факторы роста рынка двустенки</div>
+
+<div class="grid">
+  <div class="factor">
+    <h3><span class="num">1</span>Тренд на подземную прокладку кабеля</h3>
+    <ul>
+      <li>Города требуют убирать воздушные линии — эстетика, безопасность, надёжность. Воздушки рвутся при гололёде, падают при ветре, мешают застройке.</li>
+      <li>СНиПы и ГОСТы ужесточаются — для новых микрорайонов, дорог, промышленных зон подземная прокладка становится обязательной.</li>
+      <li>Россети и операторы связи массово переводят сети под землю — это госпрограмма, она не остановится.</li>
+      <li>5G и ВОЛС требуют защищённых каналов — воздушка не подходит по надёжности.</li>
+    </ul>
+    <div class="limit">
+      <strong>Ограничения:</strong> подземная прокладка дороже воздушной в 3–5 раз;
+      в малых городах и сельской местности воздушка остаётся доминирующей;
+      темпы перевода — поступательные, 8–15% в год.
+    </div>
+  </div>
+
+  <div class="factor green">
+    <h3><span class="num">2</span>Общее состояние рынка</h3>
+    <ul>
+      <li>Строительство жилья — замедляется после пика 2023–2024 (высокая ставка, снижение спроса).</li>
+      <li>Инфраструктурные проекты (дороги, метро, аэропорты) — растут, но с задержками.</li>
+      <li>Связь — стабильный рост, особенно ВОЛС и 5G.</li>
+      <li>Импортозамещение — дало толчок в 2023–2025, но эффект затухает: рынок уже насыщен российскими аналогами.</li>
+    </ul>
+    <div class="limit">
+      <strong>Важно для продаж:</strong> чек на рынке становится мельче. Клиенты дробят заказы,
+      берут под конкретный объект. Это значит — нужна гибкая фасовка и быстрая отгрузка.
+    </div>
+  </div>
+</div>
+
+<!-- ============ ДЕНЬГИ ============ -->
+<div class="section-title">Деньги: что это даёт компании</div>
+
+<div class="money-wrap">
+  <div class="money-box">
+    <h2>Коммерческие показатели продукта</h2>
+    <div class="money-sub">
+      Ключевые цифры для коммерческого отдела: вложения, выручка, рост, доля рынка.
+    </div>
+    <div class="money-grid">
+      <div class="money-card gray">
+        <div class="m-label">Стартовая закупка</div>
+        <div class="m-value">0,35 млн ₽</div>
+        <div class="m-sub">50 / 25 / 25 бухт</div>
+      </div>
+      <div class="money-card">
+        <div class="m-label">Выручка 2027</div>
+        <div class="m-value">5,0 млн ₽</div>
+        <div class="m-sub">старт продаж</div>
+      </div>
+      <div class="money-card blue">
+        <div class="m-label">Выручка 2029</div>
+        <div class="m-value">12,0 млн ₽</div>
+        <div class="m-sub">рост ×2,4 за 3 года</div>
+      </div>
+      <div class="money-card green">
+        <div class="m-label">Доля рынка 2029</div>
+        <div class="m-value">0,16%</div>
+        <div class="m-sub">рынок 7,3 млрд ₽</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ПРОГНОЗ APPLE ============ -->
+<div class="section-title">Прогноз продаж</div>
+
+<div class="forecast-apple">
+  <div class="forecast-panel">
+    <div class="fp-title">Прогноз выручки · 2027–2029</div>
+    <div class="forecast-row">
+      <div class="forecast-item start">
+        <div class="year">2027</div>
+        <div class="value">5</div>
+        <div class="unit">млн ₽</div>
+      </div>
+      <div class="forecast-arrow">→</div>
+      <div class="forecast-item growth">
+        <div class="year">2028</div>
+        <div class="value">8</div>
+        <div class="unit">млн ₽</div>
+      </div>
+      <div class="forecast-arrow">→</div>
+      <div class="forecast-item growth">
+        <div class="year">2029</div>
+        <div class="value">12</div>
+        <div class="unit">млн ₽</div>
+      </div>
+    </div>
+    <div class="forecast-growth-row">
+      <div class="growth-chip">+60% в 2028</div>
+      <div class="growth-chip">+50% в 2029</div>
+    </div>
+    <div class="forecast-note">
+      Рост ×2,4 за три года. Вход через РС + ЭТМ, первые проекты — 2027.
+    </div>
+  </div>
+</div>
+
+<!-- ============ СРАВНЕНИЕ ЦЕН ============ -->
+<div class="section-title">Цены: СИСТЕМА КМ vs DKC vs Промрукав</div>
+
+<div class="compare-wrap">
+  <div class="compare">
+    <h3>РРЦ за метр по трём диаметрам, ₽</h3>
+    <div class="compare-sub">
+      РРЦ — рекомендованная розничная цена. DKC и Промрукав — розничные ориентиры рынка.
+      Длина полосы пропорциональна цене.
+    </div>
+
+    <div class="price-block">
+      <div class="price-label">
+        <div class="diam">50 мм</div>
+        <div class="sn-tag">SN12</div>
+      </div>
+      <div class="price-bars">
+        <div class="price-bar-row">
+          <div class="price-bar-name our">СИСТЕМА КМ</div>
+          <div class="price-bar-track"><div class="price-bar-fill our" style="width:34%;">119 ₽</div></div>
+          <div class="price-bar-val our">119 ₽</div>
+        </div>
+        <div class="price-bar-row">
+          <div class="price-bar-name">DKC</div>
+          <div class="price-bar-track"><div class="price-bar-fill dkc" style="width:31%;">109 ₽</div></div>
+          <div class="price-bar-val">109 ₽</div>
+        </div>
+        <div class="price-bar-row">
+          <div class="price-bar-name">Промрукав</div>
+          <div class="price-bar-track"><div class="price-bar-fill prom" style="width:37%;">130 ₽</div></div>
+          <div class="price-bar-val">130 ₽</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="price-block">
+      <div class="price-label">
+        <div class="diam">63 мм</div>
+        <div class="sn-tag">SN10</div>
+      </div>
+      <div class="price-bars">
+        <div class="price-bar-row">
+          <div class="price-bar-name our">СИСТЕМА КМ</div>
+          <div class="price-bar-track"><div class="price-bar-fill our" style="width:47%;">165 ₽</div></div>
+          <div class="price-bar-val our">165 ₽</div>
+        </div>
+        <div class="price-bar-row">
+          <div class="price-bar-name">DKC</div>
+          <div class="price-bar-track"><div class="price-bar-fill dkc" style="width:39%;">135 ₽</div></div>
+          <div class="price-bar-val">135 ₽</div>
+        </div>
+        <div class="price-bar-row">
+          <div class="price-bar-name">Промрукав</div>
+          <div class="price-bar-track"><div class="price-bar-fill prom" style="width:47%;">165 ₽</div></div>
+          <div class="price-bar-val">165 ₽</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="price-block">
+      <div class="price-label">
+        <div class="diam">75 мм</div>
+        <div class="sn-tag">SN10</div>
+      </div>
+      <div class="price-bars">
+        <div class="price-bar-row">
+          <div class="price-bar-name our">СИСТЕМА КМ</div>
+          <div class="price-bar-track"><div class="price-bar-fill our" style="width:64%;">222 ₽</div></div>
+          <div class="price-bar-val our">222 ₽</div>
+        </div>
+        <div class="price-bar-row">
+          <div class="price-bar-name">DKC</div>
+          <div class="price-bar-track"><div class="price-bar-fill dkc" style="width:64%;">224 ₽</div></div>
+          <div class="price-bar-val">224 ₽</div>
+        </div>
+        <div class="price-bar-row">
+          <div class="price-bar-name">Промрукав</div>
+          <div class="price-bar-track"><div class="price-bar-fill prom" style="width:100%;">349 ₽</div></div>
+          <div class="price-bar-val">349 ₽</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="price-legend">
+      <span><span class="legend-dot our"></span>СИСТЕМА КМ — наш РРЦ</span>
+      <span><span class="legend-dot dkc"></span>DKC — лидер рынка</span>
+      <span><span class="legend-dot prom"></span>Промрукав — специалист по трубам</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SN + ПРИМЕНЕНИЕ (после цен) ============ -->
+<div class="section-title">Диаметры, применение и классы жёсткости SN</div>
+
+<div class="sn-wrap">
+  <div class="sn-box">
+    <h3>Что такое SN и почему SN10/SN12</h3>
+    <div class="sn-sub">
+      SN (Stiffness Nominal) — номинальная кольцевая жёсткость трубы.
+      Показывает, какую нагрузку труба выдерживает при сжатии грунтом.
+      Чем выше SN — тем прочнее труба и тем она дороже.
+    </div>
+
+    <div class="diam-grid">
+      <div class="diam-card leader">
+        <div class="dc-head">
+          <div class="dc-name">50 мм</div>
+          <div class="dc-sn">SN12</div>
+        </div>
+        <div class="dc-pop">Самый популярный · ~50–55% продаж</div>
+        <div class="dc-bar"><div class="dc-bar-fill" style="width:53%;"></div></div>
+        <ul class="dc-apps">
+          <li>Вводы в здания и сооружения</li>
+          <li>Распределительные сети</li>
+          <li>Уличное освещение</li>
+          <li>Прокладка вдоль дорог</li>
+          <li>Частный сектор, ЖКХ</li>
+        </ul>
+      </div>
+
+      <div class="diam-card">
+        <div class="dc-head">
+          <div class="dc-name">63 мм</div>
+          <div class="dc-sn">SN10</div>
+        </div>
+        <div class="dc-pop">Второй по спросу · ~25–30% продаж</div>
+        <div class="dc-bar"><div class="dc-bar-fill g2" style="width:28%;"></div></div>
+        <ul class="dc-apps">
+          <li>Распределительные сети</li>
+          <li>Вводы в колодцы</li>
+          <li>ЖКХ и внутриквартальные сети</li>
+          <li>Прокладка нескольких кабелей</li>
+          <li>Освещение</li>
+        </ul>
+      </div>
+
+      <div class="diam-card">
+        <div class="dc-head">
+          <div class="dc-name">75 мм</div>
+          <div class="dc-sn">SN10</div>
+        </div>
+        <div class="dc-pop">Нишевый, растёт · ~15–20% продаж</div>
+        <div class="dc-bar"><div class="dc-bar-fill g3" style="width:18%;"></div></div>
+        <ul class="dc-apps">
+          <li>Магистральные ответвления</li>
+          <li>ВОЛС и связь</li>
+          <li>Прокладка нескольких кабелей</li>
+          <li>Проектные заказы</li>
+          <li>Промышленные зоны</li>
+        </ul>
+      </div>
+    </div>
+
+    <table class="sn-table">
+      <thead>
+        <tr>
+          <th>Класс SN</th>
+          <th>Нагрузка</th>
+          <th>Где применяется</th>
+          <th>Наш выбор</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sn-name">SN8</td>
+          <td>~250 Н</td>
+          <td>Газоны, пешеходные зоны, частный сектор</td>
+          <td>—</td>
+        </tr>
+        <tr class="active">
+          <td class="sn-name">SN10</td>
+          <td>~320 Н</td>
+          <td>Внутриквартальные сети, ЖКХ, освещение</td>
+          <td>63 и 75 мм</td>
+        </tr>
+        <tr class="active">
+          <td class="sn-name">SN12</td>
+          <td>~400 Н</td>
+          <td>Вводы в здания, парковки, проезды</td>
+          <td>50 мм</td>
+        </tr>
+        <tr>
+          <td class="sn-name">SN16+</td>
+          <td>500+ Н</td>
+          <td>Магистрали, под дорогами, промышленные зоны</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sn-justify">
+      <strong>Почему SN10 и SN12 — верный выбор:</strong><br><br>
+      • <strong>SN12 (50 мм)</strong> — покрывает 80% задач: вводы в здания, распределительные сети,
+      прокладка вдоль дорог. Это <span class="green">оптимальный баланс цены и прочности</span>.<br>
+      • <strong>SN10 (63 и 75 мм)</strong> — достаточен для внутриквартальных сетей, ЖКХ и освещения.
+      Более высокий SN здесь <span class="green">избыточен и удорожает продукт на 20–30%</span> без реальной пользы для клиента.<br>
+      • <strong>Для магистралей и под дорогами</strong> — есть SN16+ и жёсткие трубы, но это другой сегмент,
+      другой чек, другая логистика. Мы не идём туда на старте.<br><br>
+      <strong>Итог:</strong> SN10/SN12 закрывают массовый спрос, где цена решает.
+      SN16+ — ниша для проектных заказов, куда мы выйдем позже, если будет спрос.
+    </div>
+  </div>
+</div>
+
+<!-- ============ КОММЕРЧЕСКИЙ ПОТЕНЦИАЛ ============ -->
+<div class="section-title">Коммерческий потенциал продукта</div>
+
+<div class="insight">
+  <div class="insight-box">
+    <h3>Резюме для коммерческого департамента</h3>
+    <ul>
+      <li><strong>50 мм (SN12).</strong> Позиция в рынке: между DKC (109 ₽) и Промрукавом (130 ₽).
+          Ключевое преимущество — комплектация: протяжка и муфта в бухте. Снижает трудозатраты монтажника.</li>
+      <li><strong>63 мм (SN10).</strong> Паритет с Промрукавом (165 ₽), выше DKC на 22%.
+          Аргументация: SN10 достаточен для внутриквартальных сетей и ЖКХ; разница в цене компенсируется
+          гибкостью поставки и комплексностью заказа.</li>
+      <li><strong>75 мм (SN10).</strong> <span class="green">Паритет с DKC</span> (222 ₽ vs 224 ₽)
+          и <span class="green">на 36% ниже Промрукава</span> (349 ₽). Флагманский диаметр для тендеров.</li>
+      <li><strong>Комплексное предложение.</strong> СИСТЕМА КМ закрывает всю кабельную инфраструктуру —
+          лотки и трубы. Клиент не дробит заказ, экономит время и логистику.</li>
+      <li><strong>Целевой сегмент.</strong> Внутриквартальные сети, ЖКХ, освещение, ВОЛС.
+          Магистрали и прокладка под дорогами — вне фокуса на старте.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ ЭКСПЕРТНАЯ ЧАСТЬ ============ -->
+<div class="section-title">Экспертная часть: зачем это заводу</div>
+
+<div class="hero">
+  <div class="hero-box">
+    <h2>Стратегические преимущества для СИСТЕМА КМ</h2>
+    <div class="hero-sub">
+      СИСТЕМА КМ производит металлические кабеленесущие системы. Двустенная труба —
+      не «ещё один товар», а расширение в смежный сегмент, которое усиливает позиции завода.
+    </div>
+    <div class="hero-grid">
+      <div class="hero-item">
+        <div class="hero-num">01</div>
+        <div class="hero-label">Комплексность</div>
+        <div class="hero-text">
+          Клиент получает лотки, аксессуары и трубы из одних рук.
+          Закрываем всю трассу — от щита до ввода в здание.
+        </div>
+      </div>
+      <div class="hero-item">
+        <div class="hero-num">02</div>
+        <div class="hero-label">Рост среднего чека</div>
+        <div class="hero-text">
+          Труба дополняет существующие заказы. Клиент, берущий лотки,
+          добавляет трубу — чек растёт без новых затрат на привлечение.
+        </div>
+      </div>
+      <div class="hero-item">
+        <div class="hero-num">03</div>
+        <div class="hero-label">Защита от конкурентов</div>
+        <div class="hero-text">
+          DKC и IEK предлагают комплекс. Без трубы мы проигрываем тендеры,
+          где нужна вся кабельная инфраструктура.
+        </div>
+      </div>
+      <div class="hero-item">
+        <div class="hero-num">04</div>
+        <div class="hero-label">Загрузка канала РС + ЭТМ</div>
+        <div class="hero-text">
+          Мы уже работаем с Русским Светом и ЭТМ. Новая позиция —
+          дополнительный оборот через те же полки и менеджеров.
+        </div>
+      </div>
+      <div class="hero-item">
+        <div class="hero-num">05</div>
+        <div class="hero-label">Минимальный риск</div>
+        <div class="hero-text">
+          Стартовая закупка — 0,35 млн ₽. Менее 0,1% годового оборота завода.
+          Риск ограничен, потенциал — рост до 12 млн ₽ к 2029.
+        </div>
+      </div>
+      <div class="hero-item">
+        <div class="hero-num">06</div>
+        <div class="hero-label">Бренд «полного цикла»</div>
+        <div class="hero-text">
+          СИСТЕМА КМ становится поставщиком не «лотков», а всей
+          кабельной инфраструктуры. Это усиливает переговорную позицию.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">СИСТЕМА КМ · Коммерческая презентация продукта · 2026</div>
+
+</body>
+</html>
